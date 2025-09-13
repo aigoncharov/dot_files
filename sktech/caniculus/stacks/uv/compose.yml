@@ -1,4 +1,5 @@
 services:
+  # Name your container: {username}.{project_name}
   a.goncharov.base:
     image: a.goncharov.uv
     build:
@@ -9,8 +10,10 @@ services:
     stdin_open: true
     tty: true
     volumes:
+      # Mount your entire SSD folder to use any code in the container
       - /mnt/ssd/a.goncharov/:/src
     env_file: .env
+    # Server has a ton of CPU and RAM. Use it!
     cpus: 8
     mem_limit: '128gb'
     shm_size: '32gb'
@@ -19,5 +22,6 @@ services:
         reservations:
           devices:
           - driver: nvidia
+            # Limit what GPUs you are running on. Do not scatter your training across multiple GPUs unless it is absolutely necessary
             device_ids: []
             capabilities: [gpu]
