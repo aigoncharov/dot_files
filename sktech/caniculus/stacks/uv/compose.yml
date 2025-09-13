@@ -1,0 +1,23 @@
+services:
+  a.goncharov.base:
+    image: a.goncharov.uv
+    build:
+      dockerfile: /home/a.goncharov/uv.dockerfile
+      args:
+        - UID=$UID
+        - GID=$GID
+    stdin_open: true
+    tty: true
+    volumes:
+      - /mnt/ssd/a.goncharov/:/src
+    env_file: .env
+    cpus: 8
+    mem_limit: '128gb'
+    shm_size: '32gb'
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: []
+            capabilities: [gpu]
